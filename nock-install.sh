@@ -12,18 +12,7 @@ source "$HOME/.cargo/env"
 rustup default stable
 
 echo -e "\n📁 检查 nockchain 仓库..."
-if [ -d "nockchain" ]; then
-  echo "⚠️ 已存在 nockchain 目录，是否删除重新克隆（必须选 y ）？(y/n)"
-  read -r confirm
-  if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
-    rm -rf nockchain
-    git clone https://github.com/zorp-corp/nockchain
-  else
-    echo "➡️ 使用已有目录 nockchain"
-  fi
-else
-  git clone https://github.com/zorp-corp/nockchain
-fi
+git clone https://github.com/zorp-corp/nockchain
 
 cd nockchain
 
