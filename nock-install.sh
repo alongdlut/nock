@@ -40,38 +40,7 @@ echo 'export MINIMAL_LOG_FORMAT=true' >> ~/.bashrc
 source ~/.bashrc
 
 # === 生成钱包 ===
-echo -e "\n🔐 自动生成钱包助记词与主私钥..."
-WALLET_CMD="./target/release/nockchain-wallet"
-if [ ! -f "$WALLET_CMD" ]; then
-  echo "❌ 未找到钱包命令 $WALLET_CMD"
-  exit 1
-fi
-
-SEED_OUTPUT=$($WALLET_CMD keygen)
-echo "$SEED_OUTPUT"
-
-SEED_PHRASE=$(echo "$SEED_OUTPUT" | grep -iE "seed phrase" | sed 's/.*: //')
-echo -e "\n🧠 助记词：$SEED_PHRASE"
-
-echo -e "\n🔑 从助记词派生主私钥..."
-MASTER_PRIVKEY=$($WALLET_CMD gen-master-privkey --seedphrase "$SEED_PHRASE" | grep -i "master private key" | awk '{print $NF}')
-echo "主私钥：$MASTER_PRIVKEY"
-
-echo -e "\n📬 获取主公钥..."
-MASTER_PUBKEY=$($WALLET_CMD gen-master-pubkey --master-privkey "$MASTER_PRIVKEY" | grep -i "master public key" | awk '{print $NF}')
-echo "主公钥：$MASTER_PUBKEY"
-
-echo -e "\n📄 写入 Makefile 挖矿公钥..."
-sed -i "s|^export MINING_PUBKEY :=.*$|export MINING_PUBKEY := $MASTER_PUBKEY|" Makefile
-
-# === 可选：初始化 choo hoon 测试 ===
-read -p $'\n🌀 是否执行 choo 初始化测试？这一步可能卡住界面，非必须操作。输入 y 继续：' confirm_choo
-if [[ "$confirm_choo" == "y" || "$confirm_choo" == "Y" ]]; then
-  mkdir -p hoon assets
-  echo "%trivial" > hoon/trivial.hoon
-  choo --new --arbitrary hoon/trivial.hoon
-fi
-
+echo -e "\n🚀 手动输入生成钱包命令：nockchain-wallet keygen"
 # === 启动指引 ===
 echo -e "\n🚀 配置完成，启动命令如下："
 
