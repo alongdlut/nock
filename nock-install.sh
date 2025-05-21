@@ -15,6 +15,7 @@ echo -e "\n📁 检查 nockchain 仓库..."
 git clone https://github.com/zorp-corp/nockchain
 
 cd nockchain
+cp .env_example .env
 
 echo -e "\n🔧 开始编译核心组件..."
 make install-hoonc
