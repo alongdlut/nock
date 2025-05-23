@@ -19,9 +19,12 @@ cp .env_example .env
 
 echo -e "\n🔧 开始编译核心组件..."
 make install-hoonc
+export PATH="$HOME/.cargo/bin:$PATH"
 make build
 make install-nockchain-wallet
+export PATH="$HOME/.cargo/bin:$PATH"
 make install-nockchain
+export PATH="$HOME/.cargo/bin:$PATH"
 
 echo -e "\n✅ 编译完成，配置环境变量..."
 echo 'export PATH="$PATH:/root/nockchain/target/release"' >> ~/.bashrc
@@ -35,14 +38,6 @@ echo -e "\n🚀 手动输入生成钱包命令：nockchain-wallet keygen"
 echo -e "\n🚀 配置完成，启动命令如下："
 
 echo -e "\n➡️ 启动 leader 节点："
-echo -e "screen -S leader\nmake run-nockchain-leader"
-
-echo -e "\n➡️ 启动 follower 节点："
-echo -e "screen -S follower\nmake run-nockchain-follower"
-
-echo -e "\n📄 查看日志方法："
-echo -e "screen -r leader   # 查看 leader 日志"
-echo -e "screen -r follower # 查看 follower 日志"
-echo -e "Ctrl+A 再按 D 可退出 screen 会话"
+echo -e "sh ./scripts/run_nockchain_miner.sh"
 
 echo -e "\n🎉 部署完成，祝你挖矿愉快！"
